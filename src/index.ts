@@ -1,12 +1,10 @@
 import express from "express";
 
+import userRoute from "./routes/userRoute.js";
+
 const app = express();
 
-app.get("/", (_, res) => {
-  res
-    .status(200)
-    .json({ success: true, message: "Server is working properly!" });
-});
+app.use("/user", userRoute);
 
 app.listen(5000, () => {
   console.log("server is running on port 5000");
