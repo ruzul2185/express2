@@ -6,10 +6,11 @@ import {
   getUser,
   patchUser,
 } from "../controllers/userController.js";
+import authentication from "../utils/authentication.js";
 
 const route = Router();
 
-route.get("/", getUser);
+route.get("/", authentication, getUser);
 route.get("/:id", getSingleUser);
 route.post("/", createUser);
 route.patch("/", patchUser);

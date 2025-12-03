@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { User } from "../models/userModel.js";
 import mongoose from "mongoose";
 import { ValidateId } from "../utils/idValidator.js";
+import bcrypt from "bcrypt";
 
 export const getUser = async (req: Request, res: Response) => {
   try {
@@ -44,7 +45,9 @@ export const createUser = async (req: Request, res: Response) => {
         .json({ success: false, error: "User already exists!" });
     }
 
-    const newUser = await User.create({ email, password });
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({ email, password: hashPassword });
     if (!newUser) {
       return res
         .status(400)
